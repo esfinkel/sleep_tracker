@@ -28,17 +28,20 @@ const str_missing = 'missing required field!'
 const retr = (body, fields) => {
     let missing = false;
     const vals = fields.map(v => {
-        if (!body[v]) missing = true; return body[v];
+        if (!body[v]) missing = true;
+        return body[v];
     })
     return [missing, vals];
 };
 
 app.get('/', (req, res) => {
+    /* test endpoint */
     res.send('success!');
 })
 
 app.post('/sleeps/start', (req, res) => {
-    // // given uid in post body, creates a new sleep for that uid at current start time 
+    /* given uid in post body, creates a new sleep for that uid.
+     * use current time as start time if none given. */
     let [missing, [uid]] = retr(req.body, ['uid']);
     let [missing2, [start_time]] = retr(req.body, ['currTime']);
     if (missing) {res.send(str_missing); return;}
@@ -50,10 +53,11 @@ app.post('/sleeps/start', (req, res) => {
     let sleepInfo = {start: start, in_progress: true};
     sleepRef.set(sleepInfo);
     res.send('started sleep');
-
 });
 
 app.post('/sleeps/end', async (req, res) => {
+    /* end most recent ongoing sleep.
+     * if none are ongoing, make and immediately end one. */
     let [missing, [uid]] = retr(req.body, ['uid']);
     let [missing2, [end_time]] = retr(req.body, ['currTime']);
     if (missing) {res.send(str_missing); return;}
@@ -82,6 +86,8 @@ app.post('/sleeps/end', async (req, res) => {
 });
 
 app.get('/sleeps', async (req, res) => {
+    /* send sorted list of `num_results` most recent sleeps
+     * (all results if no number specified) */
     const uid = req.query.uid;
     if (!uid) {res.send(str_missing); return;}
     const num_results = req.query.num_results;
@@ -93,7 +99,7 @@ app.get('/sleeps', async (req, res) => {
     if (typeof num_results !== 'undefined') sleepCollection = sleepCollection.limit(parseInt(num_results));
 
     // retrieve and return list
-    const sleepsObj = await sleepCollection.get();
+    const sleepsObj = await sleepCollection.get().catch(e => {res.send(e); return;});;
     const sleeps = [];
     for (let doc of sleepsObj.docs) {
         let sleep = doc.data();
@@ -109,13 +115,15 @@ app.get('/sleeps', async (req, res) => {
 });
 
 app.get('/sleeps/inprogress', async (req, res) => {
+    /* return true iff there are any sleeps in progress. */
     const uid = req.query.uid;
     const sleepCollection = usersCollection.doc(uid).collection('sleeps');
-    const sleeps = await sleepCollection.where('in_progress', '==', true).get();
+    const sleeps = await sleepCollection.where('in_progress', '==', true).get().catch(e => {res.send(e); return;});;
     res.send(sleeps.docs.length>0);
 });
 
 app.put('/sleeps/:sleepid', (req, res) => {
+    /* update start/end values for sleep with the given id */
     const body = req.body;
     let [missing, [uid]] = retr(body, ['uid']);
     let [missing2, [ustart, uend]] = retr(body, ['start', 'end']);
@@ -127,7 +135,6 @@ app.put('/sleeps/:sleepid', (req, res) => {
     const upsleep = usercollec.doc(sleepid);
     upsleep.update(
         {
-            // requires all fields currently
         start: new Date(ustart),
         end: new Date(uend),
         in_progress: false
@@ -136,10 +143,10 @@ app.put('/sleeps/:sleepid', (req, res) => {
     res.send(
         'updated'
     );
-    
 })
 
 app.delete('/sleeps/:sleepid', (req, res) => {
+    /* delete sleep with the given id */
     const body = req.body;
     let [missing, [uid]] = retr(body, ['uid']);
     const sleepid = req.params.sleepid;
@@ -149,15 +156,11 @@ app.delete('/sleeps/:sleepid', (req, res) => {
     res.send('deleted sleep with id '.concat(sleepid));
 });
 
+app.listen(process.env.PORT || 8080, function () { console.log('app started - if local, go to http://localhost:8080/') });
+
 // TIMEZONES:
-// js date object stores in epoch time
-// js operations can convert to local time zone (ie user timezone if client-side)
-// firebase also seems to store in epoch time (the web UI converts to local time)
-// so other than potential client-side conversion, we don't need to worry! they 
-//          probably don't care what timezone they slept in
-//      And data they took in a diff timezone will be off, but whatever
+// js date object stores in epoch time; js operations (and any displays) convert to local time zone
+// firebase also stores in epoch time (the web UI converts to local time)
+// So the only potential issue is that data the user took in a different timezone will look off
 
-app.listen(process.env.PORT || 8080, function () { console.log('app started - go to http://localhost:8080/') });
-
-// todo -> stuff from latest lecture
-// todo -> catch/handle errors lmao
+// todo -> flow that allows for res.sending more specific errors
