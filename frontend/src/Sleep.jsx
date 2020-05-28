@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 
 import CustomTimePicker from './CustomTimePicker'
 
@@ -24,19 +23,5 @@ export default ({st, en, sid, callback}) => {
         </div>
     );
 };
-
-
-// export default ({callback, name, artist, rating, id}) => {
-//     const [newRating, setNewRating]  = useState(0);
-//     return (
-//         <div>
-//             Song {name} by {artist} w rating {rating}
-//             <input placeholder="New Rating" onChange={e => setNewRating(e.target.value)} />
-//             <button onClick={e => callback(id, newRating)}>Update rating</button>
-//         </div>
-//     );
-// };  );
-//};
-
 
 

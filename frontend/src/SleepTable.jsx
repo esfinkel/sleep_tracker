@@ -8,12 +8,12 @@ export default ({uid, sleeps, updateData}) => {
     const url = "https://morning-waters-80542.herokuapp.com";
 
     const updateSleep = (sid, st, en) => {
-        // step 1: make put request
-        console.log(`PUT update for ${sid}`);
+        // make put request
+        // console.log(`PUT update for ${sid}`);
         axios.put(`${url}/sleeps/${sid}`, {start:st, end:en, uid})
-        // step 2: update local state
+        // update local state
         .then(r => {
-            console.log(r.data);
+            // console.log(r.data);
             updateData(sleeps.map(s => s.sid === sid ? {...s, start: st, end: en} : s));
         });
     };

@@ -1,18 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 const stats = require('simple-statistics');
 
-//pass in duration
-export default ({sleepTimes}) => {
-
-    // (sleep.end - sleep.start) / (1000*3600); // in hours
-    // map this ^ ?
-    //oh i ddint thnk it would compile
-// i think what you had before was fine, in slepinfo
-    const mean = sleepTimes.length >= 1 ? stats.mean(sleepTimes) : 0;
-    const median = stats.median(sleepTimes);
-    const min = stats.min(sleepTimes);
-    const max = stats.max(sleepTimes);
-    const sd = stats.standardDeviation(sleepTimes);
+export default ({sleepDurations}) => {
+    const mean = sleepDurations.length >= 1 ? stats.mean(sleepDurations) : 0;
+    const median = stats.median(sleepDurations);
+    const min = stats.min(sleepDurations);
+    const max = stats.max(sleepDurations);
+    const sd = stats.standardDeviation(sleepDurations);
     return (
         <div>
             Mean: {mean.toFixed(1)} <br />

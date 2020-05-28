@@ -19,7 +19,6 @@ export default ({sleeps}) => {
           );
         }
         //  check texts
-      
         return null;
       }
 
