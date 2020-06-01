@@ -15,6 +15,7 @@ export default ({uid}) => {
     const url = "https://morning-waters-80542.herokuapp.com";
 
     const[sleeps, setSleeps] = useState([]);
+    const[hasData, setHasData] = useState(false);
 
     const fetchSleeps = () => {
         if (uid==="") return;
@@ -27,7 +28,8 @@ export default ({uid}) => {
                 )
                 .sort((a, b) => new Date(a.end) - new Date(b.end))
                 )})
-            // .then(console.log('fetched sleeps'))
+            .then(r => setHasData(true))
+            // .then(r => console.log('fetched sleeps'))
             .catch(err => {console.error(err)});
     }
     useEffect(() => fetchSleeps(), [uid]);
@@ -47,6 +49,12 @@ export default ({uid}) => {
 
     return (
         <div>
+            {!hasData &&
+            <div>
+                <h1>Currently fetching data</h1>
+                <h2>There may be a wait of ~20 seconds if this website has not been recently accessed.</h2>
+                {/* https://devcenter.heroku.com/articles/free-dyno-hours#dyno-sleeping */}
+            </div>}
             <SleepButton uid={uid} setSleeping={setSleeping} sleeping={sleeping} fetch={fetchSleeps} />
             <br />
             {!sleeping && <Container fluid>
@@ -55,11 +63,11 @@ export default ({uid}) => {
                         <SleepChart sleeps = {sleeps}/>
                     </Col>
                     <Col>
-                        <SleepTable uid={uid} sleeps={sleeps} updateData={setSleeps}/>
+                        {sleepDurations.length >= 1 && !sleeping && <Stats sleepDurations={sleepDurations}/> }
                     </Col>
                 </Row>
             </Container>}
-            {sleepDurations.length >= 1 && !sleeping && <Stats sleepDurations={sleepDurations}/> }
+            <SleepTable uid={uid} sleeps={sleeps} updateData={setSleeps}/>
 
         </div>
     );

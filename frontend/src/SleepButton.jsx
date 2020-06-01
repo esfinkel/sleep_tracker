@@ -11,13 +11,13 @@ export default ({uid, setSleeping, sleeping, fetch}) => {
         if (sleeping===false) {
             axios.post(`${url}/sleeps/start`, {uid, currTime})
                 .then(
-                    // console.log('sleeping!')
+                    // r => console.log('sleeping!')
                 )
                 .catch (e => console.log(`error: ${e}`));
             } else {
                 axios.post(`${url}/sleeps/end`, {uid, currTime})
                 .then(
-                    // console.log('not sleeping!')
+                    // r => console.log('not sleeping!')
                 )
                 .then(setTimeout(() => fetch(), 1000)) // takes several milliseconds for Firebase data to update
                 .catch (e => console.error(`error: ${e}`));
