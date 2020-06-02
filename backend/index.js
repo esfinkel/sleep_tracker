@@ -145,11 +145,9 @@ app.put('/sleeps/:sleepid', (req, res) => {
     );
 })
 
-app.delete('/sleeps/:sleepid', (req, res) => {
+app.delete('/sleeps/:uid/:sleepid', (req, res) => {
     /* delete sleep with the given id */
-    const body = req.body;
-    let [missing, [uid]] = retr(body, ['uid']);
-    const sleepid = req.params.sleepid;
+    let [missing, [uid, sleepid]] = retr(req.params, ['uid', 'sleepid']);
     if (missing) {res.send(str_missing); return;}
     
     usersCollection.doc(uid).collection('sleeps').doc(sleepid).delete();
