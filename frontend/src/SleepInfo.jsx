@@ -47,6 +47,9 @@ export default ({uid}) => {
     }
     useEffect(() => fetchSleepingStatus(), [uid]);
 
+    const isMobile = () => window.innerWidth < 480 || window.outerWidth < 480;
+    // console.log(`inner ${window.innerWidth}, outer ${window.outerWidth}, mobile ${isMobile()}`);
+
     return (
         <div>
             {!hasData &&
@@ -57,17 +60,30 @@ export default ({uid}) => {
             </div>}
             <SleepButton uid={uid} setSleeping={setSleeping} sleeping={sleeping} fetch={fetchSleeps} />
             <br />
-            {!sleeping && <Container fluid>
-                <Row>
-                    <Col>
-                        <SleepChart sleeps = {sleeps}/>
-                    </Col>
-                    <Col>
-                        {sleepDurations.length >= 1 && !sleeping && <Stats sleepDurations={sleepDurations}/> }
-                    </Col>
-                </Row>
-            </Container>}
-            <SleepTable uid={uid} sleeps={sleeps} updateData={setSleeps}/>
+            {!sleeping && (<div>
+                {isMobile() ?
+                (<div>
+                    {sleepDurations.length >= 1 && !sleeping && <Stats sleepDurations={sleepDurations}/> }
+                    <br />
+                    <br />
+                    <SleepChart sleeps = {sleeps}/>
+                    <br />
+                </div>) :
+                (<div>
+                    <Container fluid>
+                    <Row>
+                        <Col>
+                            <SleepChart sleeps = {sleeps}/>
+                        </Col>
+                        <Col>
+                            {sleepDurations.length >= 1 && !sleeping && <Stats sleepDurations={sleepDurations}/> }
+                        </Col>
+                    </Row>
+                </Container>
+                </div>)
+                }
+                <SleepTable uid={uid} sleeps={sleeps} updateData={setSleeps}/>
+            </div>)}
 
         </div>
     );

@@ -8,6 +8,8 @@ import "react-datepicker/dist/react-datepicker.css";
 // (am leaving commented code in until I finalize design)
 
 export default ({time, update}) => {
+  const isMobile = () => window.innerWidth < 480 || window.outerWidth < 480;
+  // console.log(isMobile());
 
   return (
     <DatePicker
@@ -25,7 +27,8 @@ export default ({time, update}) => {
         openToDate={time}
         dateFormat="MM/dd/yyyy h:mm aa"
         
-        // withPortal
+        withPortal={isMobile()}
+        // withFullScreenPortal // solid background
 
         popperModifiers={{
             offset: {

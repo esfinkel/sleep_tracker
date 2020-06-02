@@ -27,7 +27,7 @@ export default ({uid, setSleeping, sleeping, fetch}) => {
 
     return (
         <div>
-            <Button color={sleeping ? "success" : "secondary"} onClick={changeSleepStatus}>
+            <Button color={sleeping ? "success" : "info"} onClick={changeSleepStatus}>
                 {sleeping ? "wake up" : "start sleeping"} 
             </Button>
         </div>
