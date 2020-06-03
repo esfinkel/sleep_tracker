@@ -16,15 +16,13 @@ export default ({sleepDurations}) => {
             Minimum: {min.toFixed(1)} <br />
             Maximum: {max.toFixed(1)} <br />
             Standard Deviation: {sd.toFixed(2)}
-            {sleepDurations.length===7 && <div>
-                <br />
-                <div>Daily sleep goal:
-                    <input id="end" type="text" value={goal} placeholder={goal} onChange={e => setGoal(e.target.value)}/>
-                </div> 
-                <div>
-                    Sleep {(debt(goal)<=0) ? "surplus" : "debt"}: {(debt(goal)<=0) ? -debt(goal) : debt(goal)}
-                </div>
-            </div> }
+            <br />
+            <div>Daily sleep goal:
+                <input id="end" type="text" value={goal} placeholder={goal} onChange={e => setGoal(e.target.value)}/>
+            </div> 
+            <div>
+                Sleep {(debt(goal)<=0) ? "surplus" : "debt"}: {(debt(goal)<=0) ? -debt(goal) : debt(goal)}
+            </div>
         </div>
     );
 };
