@@ -34,6 +34,21 @@ const retr = (body, fields) => {
     return [missing, vals];
 };
 
+const serialize = (docs) => {
+    const sleeps = [];
+    for (let doc of docs) {
+        let sleep = doc.data();
+        sleep.sid = doc.id;
+        sleep.start = sleep.start.toDate(); // this makes it a js Date
+        if (!sleep.in_progress) {
+            sleep.end = sleep.end.toDate();
+            sleep.duration = (sleep.end - sleep.start) / (1000*3600); // in hours
+        }
+        sleeps.push(sleep);
+    }
+    return sleeps;
+}
+
 app.get('/', (req, res) => {
     /* test endpoint */
     res.send('success!');
