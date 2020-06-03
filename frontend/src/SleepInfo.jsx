@@ -83,7 +83,7 @@ export default ({uid}) => {
                 </Container>
                 </div>)
                 }
-                <SleepTable uid={uid} sleeps={sleeps} updateData={setSleeps}/>
+                <SleepTable uid={uid} sleeps={sleeps} updateData={setSleeps} fetch={fetchSleeps}/>
             </div>)}
 
         </div>
