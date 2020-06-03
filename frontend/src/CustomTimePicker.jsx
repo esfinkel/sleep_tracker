@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 // see https://www.npmjs.com/package/react-datepicker 
 // and https://reactdatepicker.com
+// https://popper.js.org/docs/v2/modifiers/
 // (am leaving commented code in until I finalize design)
 
 export default ({time, update}) => {
@@ -36,7 +37,7 @@ export default ({time, update}) => {
               offset: "5px, 10px"
             },
             preventOverflow: {
-              // enabled: true,
+              enabled: true,
               escapeWithReference: false,
               boundariesElement: "viewport"
             }
