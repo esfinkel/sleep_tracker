@@ -115,17 +115,23 @@ app.get('/sleeps', async (req, res) => {
 
     // retrieve and return list
     const sleepsObj = await sleepCollection.get().catch(e => {res.send(e); return;});;
-    const sleeps = [];
-    for (let doc of sleepsObj.docs) {
-        let sleep = doc.data();
-        sleep.sid = doc.id;
-        sleep.start = sleep.start.toDate(); // this makes it a js Date
-        if (!sleep.in_progress) {
-            sleep.end = sleep.end.toDate();
-            sleep.duration = (sleep.end - sleep.start) / (1000*3600); // in hours
-        }
-        sleeps.push(sleep);
-    }
+    const sleeps = serialize(sleepsObj.docs);
+    res.send(sleeps);
+});
+
+app.get('/sleeps/week', async (req, res) => {
+    /* send sorted list of all sleeps that ended within the last
+     * 7 days. */
+    const uid = req.query.uid;
+    if (!uid) {res.send(str_missing); return;}
+    
+    // retrieve most-recently-started sleeps for a user
+    let weekAgo = new Date(new Date() - (24*60*60*1000) * 7);
+    let sleepCollection = usersCollection.doc(uid).collection('sleeps').orderBy('end', 'desc');
+    const sleepsObj = await sleepCollection.where('end', '>', weekAgo).get()
+        .catch(e => {res.send(e); return;});;
+
+    const sleeps = serialize(sleepsObj.docs);
     res.send(sleeps);
 });
 
