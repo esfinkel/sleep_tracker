@@ -20,7 +20,8 @@ export default ({uid}) => {
     const fetchSleeps = () => {
         if (uid==="") return;
         // console.log(`fetchSleeps: uid is ${uid}`);
-        axios.get(`${url}/sleeps?uid=${uid}&num_results=7`)
+        // axios.get(`${url}/sleeps?uid=${uid}&num_results=7`)
+        axios.get(`${url}/sleeps/week?uid=${uid}`)
             .then(res => {if (res.data.filter)
                     setSleeps(
                 res.data.filter(
