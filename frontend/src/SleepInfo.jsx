@@ -10,6 +10,23 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+const Opt = ({a, b, bool}) => { return(
+    bool ?
+    <div>
+        {a}<br /><br />{b}
+        <br />
+    </div>
+    :
+    <Container fluid>
+        <Row>
+            <Col sm={{ size: 'auto'}}>{b}</Col>
+            <Col sm={{ size: 'auto'}}></Col>
+            <Col sm={{ size: 'auto'}}>{a}</Col>
+        </Row>
+    </Container>
+)}
+
+
 export default ({uid}) => {
 
     const url = "https://morning-waters-80542.herokuapp.com";
@@ -53,16 +70,34 @@ export default ({uid}) => {
 
     return (
         <div>
-            {!hasData &&
+            {!hasData ?
             <div>
                 <h1>Currently fetching data</h1>
                 <h2>There may be a wait of ~20 seconds if this website has not been recently accessed.</h2>
                 {/* https://devcenter.heroku.com/articles/free-dyno-hours#dyno-sleeping */}
-            </div>}
+            </div>
+            :
+            <div>
             <SleepButton uid={uid} setSleeping={setSleeping} sleeping={sleeping} fetch={fetchSleeps} />
             <br />
-            {!sleeping && (<div>
-                {isMobile() ?
+            {!sleeping &&
+                <div>
+                    <Opt
+                        bool={isMobile()}
+                        a={sleepDurations.length >= 1 && !sleeping && <Stats sleepDurations={sleepDurations}/>}
+                        b={<SleepChart sleeps = {sleeps}/>}
+                        />
+                    <SleepTable uid={uid} sleeps={sleeps} updateData={setSleeps} fetch={fetchSleeps}/>
+                </div>
+            }
+            </div>
+            }
+
+        </div>
+    );
+};
+
+                {/* {isMobile() ?
                 (<div>
                     {sleepDurations.length >= 1 && !sleeping && <Stats sleepDurations={sleepDurations}/> }
                     <br />
@@ -83,9 +118,4 @@ export default ({uid}) => {
                 </Container>
                 </div>)
                 }
-                <SleepTable uid={uid} sleeps={sleeps} updateData={setSleeps} fetch={fetchSleeps}/>
-            </div>)}
-
-        </div>
-    );
-};
+            </div>)} */}
