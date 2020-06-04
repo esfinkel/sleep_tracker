@@ -1,24 +1,59 @@
 import React, { useState } from 'react';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import moment from 'moment';
 
-import CustomTimePicker from './CustomTimePicker'
+import CustomDateTimePicker from './CustomDateTimePicker'
+
+const Opt = ({a, b, bool}) => { return(
+    bool ?
+    <div>
+        From: {a}
+        To: {b}
+    </div>
+    :
+    <Container fluid>
+        <Row>
+            <Col sm={{ size: 'auto', offset: 1 }}>From: {a}</Col>
+            <Col sm={{ size: 'auto', offset: 1 }}>To: {b}</Col>
+            <Col sm={{ size: 'auto'}}></Col>
+        </Row>
+    </Container>
+)}
 
 export default ({st, en, sid, update, delt}) => {
+    let [edit, setEdit] = useState(false);
     let [start, updateStart] = useState(st);
     let [end, updateEnd] = useState(en);        
+    const formatDate = s => moment(s).format("ddd MM/DD h:mm a");
+    const isMobile = () => window.innerWidth < 480 || window.outerWidth < 480;
         
     return (
         <div>
             <br />
-            {/* From &nbsp; */}
-            <CustomTimePicker time={new Date(start)} update={updateStart} />
-            {/* <input id="start" type="text" value={start} placeholder={start} onChange={e => updateStart(e.target.value)}/> */}
-            &nbsp; to &nbsp;
-            <CustomTimePicker time={new Date(end)} update={updateEnd} />
-            {/* <input id="end" type="text" value={end} placeholder={end} onChange={e => updateEnd(e.target.value)}/> */}
+            { edit ?
+                <Opt
+                    a={<CustomDateTimePicker time={new Date(start)} update={updateStart} />}
+                    b={<CustomDateTimePicker time={new Date(end)} update={updateEnd} />}
+                    bool={isMobile()}
+                    />
+                :
+                <div>
+                    From {formatDate(start)} to {formatDate(end)}
+                </div>
+            }
             &nbsp;
             ({((new Date(end) - new Date(start)) / (1000*3600)).toFixed(1)} hours)
             &nbsp;
-            <button onClick={e => update(sid, start, end)}>Update</button>
+            {edit && 
+                <span>
+                    <button onClick={e => {update(sid, start, end); setEdit(false);}}>Update</button>
+                    &nbsp;
+                    <button onClick={e => {updateStart(st); updateEnd(en); setEdit(false);}}>Cancel</button>
+                </span>
+            }
+            {!edit && <button onClick={e => setEdit(true)}>Edit</button>}
             &nbsp;
             <button onClick={e => delt(sid)}>Delete</button>
             <br />
