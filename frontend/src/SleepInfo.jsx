@@ -96,26 +96,3 @@ export default ({uid}) => {
         </div>
     );
 };
-
-                {/* {isMobile() ?
-                (<div>
-                    {sleepDurations.length >= 1 && !sleeping && <Stats sleepDurations={sleepDurations}/> }
-                    <br />
-                    <br />
-                    <SleepChart sleeps = {sleeps}/>
-                    <br />
-                </div>) :
-                (<div>
-                    <Container fluid>
-                    <Row>
-                        <Col>
-                            <SleepChart sleeps = {sleeps}/>
-                        </Col>
-                        <Col>
-                            {sleepDurations.length >= 1 && !sleeping && <Stats sleepDurations={sleepDurations}/> }
-                        </Col>
-                    </Row>
-                </Container>
-                </div>)
-                }
-            </div>)} */}
