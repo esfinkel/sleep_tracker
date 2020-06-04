@@ -20,9 +20,13 @@ export default ({sleepDurations}) => {
             <div>Daily sleep goal:
                 <input id="end" type="text" value={goal} placeholder={goal} onChange={e => setGoal(e.target.value)}/>
             </div> 
+            { sleepDurations.length >= 7 ?
             <div>
                 Sleep {(debt(goal)<=0) ? "surplus" : "debt"}: {(debt(goal)<=0) ? -debt(goal) : debt(goal)}
             </div>
+            :
+            <div>Need more sleeps for sleep debt</div>
+            }
         </div>
     );
 };
