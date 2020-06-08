@@ -27,7 +27,14 @@ export default ({st, en, sid, update, delt}) => {
     let [start, updateStart] = useState(st);
     let [end, updateEnd] = useState(en);        
     const formatDate = s => moment(s).format("ddd MM/DD h:mm a");
+    const formatJustDate = s => moment(s).format("ddd MM/DD");
+    const formatJustTime = s => moment(s).format("h:mm a");
     const isMobile = () => window.innerWidth < 480 || window.outerWidth < 480;
+    const sameDate = () => (
+        (new Date(start)).getDate()==(new Date(end)).getDate() &&
+        (new Date(start)).getMonth()==(new Date(end)).getMonth() &&
+        (new Date(start)).getFullYear()==(new Date(end)).getFullYear()
+    )
         
     return (
         <div>
@@ -40,7 +47,13 @@ export default ({st, en, sid, update, delt}) => {
                     />
                 :
                 <div>
-                    From {formatDate(start)} to {formatDate(end)}
+                    {
+                        sameDate()
+                        ?
+                        <span><strong>{formatJustDate(start)}</strong> from <strong>{formatJustTime(start)}</strong> to <strong>{formatJustTime(end)}</strong></span>
+                        :
+                        <span>From <strong>{formatDate(start)}</strong> to <strong>{formatDate(end)}</strong></span>
+                    }
                 </div>
             }
             &nbsp;
