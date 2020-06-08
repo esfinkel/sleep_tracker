@@ -27,8 +27,8 @@ export default ({uid, sleeps, updateData, fetch}) => {
         axios.post(`${url}/sleeps/start`, {uid, currTime})
         .then(setTimeout(() => 
            (axios.post(`${url}/sleeps/end`, {uid, currTime})
-               .then(setTimeout(() => {fetch(); setMsg("")}, 300)) // takes several milliseconds for Firebase data to update
-           ), 300))
+               .then(setTimeout(() => {fetch(); setMsg("")}, 400)) // takes several milliseconds for Firebase data to update
+           ), 400))
         .catch (e => console.error(`error: ${e}`));
     }
 
