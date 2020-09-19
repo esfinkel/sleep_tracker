@@ -13,6 +13,7 @@
     "dot-prop": "^5.1.1",
     "express": "^4.16.4",
     "firebase": "^7.14.1",
-    "firebase-admin": "^7.2.0"
+    "firebase-admin": "^7.2.0",
+    "node-forge": "^0.10.0"
   }
 }
