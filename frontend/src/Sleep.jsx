@@ -31,11 +31,10 @@ export default ({st, en, sid, update, delt}) => {
     const formatJustTime = s => moment(s).format("h:mm a");
     const isMobile = () => window.innerWidth < 480 || window.outerWidth < 480;
     const sameDate = () => (
-        (new Date(start)).getDate()==(new Date(end)).getDate() &&
-        (new Date(start)).getMonth()==(new Date(end)).getMonth() &&
-        (new Date(start)).getFullYear()==(new Date(end)).getFullYear()
+        (new Date(start)).getDate()===(new Date(end)).getDate() &&
+        (new Date(start)).getMonth()===(new Date(end)).getMonth() &&
+        (new Date(start)).getFullYear()===(new Date(end)).getFullYear()
     )
-        
     return (
         <div>
             <br />

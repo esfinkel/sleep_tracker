@@ -28,10 +28,9 @@ export default ({sleeps}) => {
             transform: 'translate(-50%)'
         }}>
         <AreaChart
-        width={600}
-        height={500}
+        width={Math.min(window.innerWidth-20, 500)}
+        height={Math.min(500, window.innerHeight/2)}
         data={data} >
-
         
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="date" />

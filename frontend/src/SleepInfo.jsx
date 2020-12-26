@@ -3,7 +3,6 @@ import axios from 'axios';
 import SleepTable from './SleepTable';
 import SleepButton from './SleepButton';
 import Stats from './Stats';
-import { isNull } from 'util';
 import SleepChart from './SleepChart';
 
 import Container from 'react-bootstrap/Container';
@@ -56,7 +55,7 @@ export default ({uid}) => {
 
     const [sleeping, setSleeping] = useState(null);
     const fetchSleepingStatus = () => {
-        if (!isNull(sleeping)) return;
+        if (sleeping!==null) return;
         if (uid==="") return; 
         // console.log('fetching status');
         axios.get(`${url}/sleeps/inprogress?uid=${uid}`)
