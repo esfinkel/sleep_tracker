@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import 'firebase/auth';
-import * as firebase from 'firebase/app';
+import firebase from 'firebase/app';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 const firebaseConfig = require('./firebase-config.json');
 
