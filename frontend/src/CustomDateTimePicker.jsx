@@ -8,7 +8,7 @@ export default ({time, update}) => {
     return (
         <Datetime 
             readonly={true}
-            defaultValue={time}
+            initialValue={time}
             viewMode="time"
             input={false}
             dateFormat="ddd MM/DD/YYYY"
