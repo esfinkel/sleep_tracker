@@ -24,7 +24,7 @@ const Opt = ({a, b, bool}) => { return(
 
 export default ({st, en, sid, update, delt}) => {
     let [edit, setEdit] = useState(false);
-    let [start, updateStart] = useState(st);
+    let [start, updateStart] = useState(st); // start, end are strings
     let [end, updateEnd] = useState(en);        
     const formatDate = s => moment(s).format("ddd MM/DD h:mm a");
     const formatJustDate = s => moment(s).format("ddd MM/DD");
@@ -40,8 +40,8 @@ export default ({st, en, sid, update, delt}) => {
             <br />
             { edit ?
                 <Opt
-                    a={<CustomDateTimePicker time={new Date(start)} update={updateStart} />}
-                    b={<CustomDateTimePicker time={new Date(end)} update={updateEnd} />}
+                    a={<CustomDateTimePicker time={start} update={updateStart} />}
+                    b={<CustomDateTimePicker time={end} update={updateEnd} />}
                     bool={isMobile()}
                     />
                 :
