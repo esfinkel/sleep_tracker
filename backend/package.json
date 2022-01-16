@@ -16,6 +16,6 @@
     "firebase": "^8.5.0",
     "firebase-admin": "^9.8.0",
     "lodash": "4.17.21",
-    "node-forge": "^0.10.0"
+    "node-forge": "^1.2.1"
   }
 }
