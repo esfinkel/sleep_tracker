@@ -30,7 +30,9 @@ export default ({children, callback}) => {
             {user && children}
             {!user && <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />}
             <br />
-            {user && <button onClick={() => firebase.auth().signOut()}>Sign out</button>}
+            {user && <button onClick={() => firebase.auth().signOut()}>Sign out</button>} {<button onClick={() => window.location.reload(false)} >Refresh</button>}
+            <br />
+            <br />
         </div>
     )
 }
