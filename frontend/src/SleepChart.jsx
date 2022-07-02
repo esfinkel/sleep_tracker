@@ -33,18 +33,18 @@ export default ({sleeps}) => {
             position: 'relative', left: '50%',
             transform: 'translate(-50%)'
         }}>
-        <AreaChart
-        width={Math.min(window.innerWidth-20, 500)}
-        height={Math.min(400, window.innerHeight/3)}
-        data={data} >
-        
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="date" />
-        <YAxis type="number" domain={[0,Math.max(...sleepTimes)]} allowDataOverflow={true} ticks={tickArray}/> 
-        <Tooltip content = {<CustomTooltip />}/>
-        <Area type="monotone" dataKey="amt" stroke="#8884d8" fill="#8884d8" />
-      </AreaChart>
-      </div>
+          <AreaChart
+              width={Math.min(window.innerWidth-20, 500)}
+              height={Math.min(400, window.innerHeight/3)}
+          data={data} >
+            
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="date" />
+            <YAxis type="number" domain={[0,Math.max(...sleepTimes)]} allowDataOverflow={true} ticks={tickArray}/> 
+            <Tooltip content = {<CustomTooltip />}/>
+            <Area type="monotone" dataKey="amt" stroke="#8884d8" fill="#8884d8" />
+          </AreaChart>
+        </div>
         
     )
 }
