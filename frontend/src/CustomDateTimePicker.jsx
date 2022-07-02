@@ -36,7 +36,7 @@ class NearbyDateDTPicker extends React.Component {
                 renderView={(mode, renderDefault) =>
                     this.renderView(mode, renderDefault)
                 }
-                // onBeforeNavigate={() => false} // to disable calendar click
+                onBeforeNavigate={() => false} // to disable calendar click
 
                 value={new Date(this.props.time)} // mutable, unlike initialValue prop
                 initialViewMode="time"
