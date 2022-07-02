@@ -35,7 +35,7 @@ export default ({sleeps}) => {
         }}>
         <AreaChart
         width={Math.min(window.innerWidth-20, 500)}
-        height={Math.min(500, window.innerHeight/2)}
+        height={Math.min(400, window.innerHeight/3)}
         data={data} >
         
         <CartesianGrid strokeDasharray="3 3" />
